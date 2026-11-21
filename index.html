@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackwater &amp; Co. — Irish Whiskey · Comté de Cork</title>
+<meta name="description" content="Blackwater & Co., whiskey irlandais single pot still distillé sur les rives de la Blackwater, Comté de Cork.">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Uncial+Antiqua&family=Noto+Sans+Ogham&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+
+<!-- Symboles SVG réutilisables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="triquetra" viewBox="-60 -60 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="3.2">
+        <path id="lobe" d="M0 8 A30 30 0 0 1 0 -50 A30 30 0 0 1 0 8Z"/>
+        <use href="#lobe" transform="rotate(120)"/>
+        <use href="#lobe" transform="rotate(240)"/>
+        <circle r="22"/>
+      </g>
+    </symbol>
+
+    <!-- bouteille : la couleur du liquide est passée via --liquid -->
+    <symbol id="bottle" viewBox="0 0 120 340">
+      <!-- bouchon -->
+      <rect x="44" y="4" width="32" height="34" rx="3" fill="#1a120b"/>
+      <rect x="44" y="30" width="32" height="6" fill="#c8954a"/>
+      <!-- col -->
+      <path d="M48 38 H72 V78 C72 96 104 104 104 136 V318 C104 328 98 334 88 334 H32 C22 334 16 328 16 318 V136 C16 104 48 96 48 78Z"
+            fill="var(--liquid)" />
+      <!-- reflets verre -->
+      <path d="M48 38 H72 V78 C72 96 104 104 104 136 V318 C104 328 98 334 88 334 H32 C22 334 16 328 16 318 V136 C16 104 48 96 48 78Z"
+            fill="url(#glass)" />
+      <rect x="24" y="140" width="5" height="170" rx="2.5" fill="#fff" opacity=".14"/>
+      <!-- étiquette -->
+      <rect x="22" y="176" width="76" height="112" fill="#efe7d8"/>
+      <rect x="26" y="180" width="68" height="104" fill="none" stroke="#2f4a3c" stroke-width=".8"/>
+      <g transform="translate(60 202) scale(.17)" color="#2f4a3c"><use href="#triquetra" x="-60" y="-60" width="120" height="120"/></g>
+      <text x="60" y="232" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="10" fill="#0d1311" textLength="58" lengthAdjust="spacingAndGlyphs">BLACKWATER</text>
+      <text x="60" y="243" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="8" font-style="italic" fill="#8a5f28">&amp; Co.</text>
+      <line x1="38" y1="252" x2="82" y2="252" stroke="#c8954a" stroke-width=".6"/>
+      <text x="60" y="266" text-anchor="middle" font-family="Jost, Arial, sans-serif" font-size="5" fill="#2f4a3c" letter-spacing="1.4">IRISH WHISKEY</text>
+      <text x="60" y="276" text-anchor="middle" font-family="Jost, Arial, sans-serif" font-size="4" fill="#8a7d6a" letter-spacing="1">CO. CORK</text>
+      <!-- collerette -->
+      <rect x="47" y="60" width="26" height="12" fill="#2f4a3c"/>
+      <rect x="47" y="60" width="26" height="12" fill="none" stroke="#c8954a" stroke-width=".6"/>
+    </symbol>
+    <linearGradient id="glass" x1="0" x2="1">
+      <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+      <stop offset=".25" stop-color="#fff" stop-opacity=".06"/>
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".45"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ========== VÉRIFICATION D'ÂGE ========== -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-box">
+    <svg class="mark"><use href="#triquetra"/></svg>
+    <h3 id="gate-title">Fáilte</h3>
+    <span class="gaelic">Bienvenue à la maison Blackwater</span>
+    <p>Pour découvrir nos whiskeys, vous devez avoir l'âge légal de consommer de l'alcool dans votre pays de résidence.</p>
+    <div class="gate-actions">
+      <button class="btn solid" id="gate-yes">J'ai l'âge légal</button>
+      <button class="btn ghost" id="gate-no">Pas encore</button>
+    </div>
+    <div class="gate-msg" id="gate-msg"></div>
+  </div>
+</div>
+
+<!-- ========== NAVIGATION ========== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo"><svg><use href="#triquetra"/></svg>Blackwater <span>&amp;</span> Co.</a>
+    <nav>
+      <ul id="menu">
+        <li><a href="#maison">La Maison</a></li>
+        <li><a href="#savoir-faire">Savoir-faire</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#fondatrice">Fondatrice</a></li>
+        <li><a href="#visites">Visites</a></li>
+      </ul>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="top">
+  <svg class="waves" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true">
+    <g>
+      <path d="M-100 120 C 200 80, 400 160, 720 120 S 1240 80, 1540 120"/>
+      <path d="M-100 180 C 240 140, 460 220, 760 180 S 1260 140, 1540 180"/>
+      <path d="M-100 240 C 180 200, 420 280, 700 240 S 1200 200, 1540 240"/>
+      <path d="M-100 300 C 260 260, 480 340, 780 300 S 1280 260, 1540 300"/>
+    </g>
+    <g>
+      <path d="M-100 150 C 160 120, 380 190, 680 150 S 1180 110, 1540 150"/>
+      <path d="M-100 210 C 220 170, 440 250, 740 210 S 1220 170, 1540 210"/>
+      <path d="M-100 270 C 200 230, 400 310, 720 270 S 1240 230, 1540 270"/>
+      <path d="M-100 340 C 240 300, 460 380, 760 340 S 1260 300, 1540 340"/>
+    </g>
+  </svg>
+  <div class="hero-content">
+    <span class="ogham" title="Abhainn Dubh — Blackwater en ogham">᚛ᚐᚁᚆᚐᚔᚅᚅ ᚇᚒᚁᚆ᚜</span>
+    <p class="eyebrow reveal">Irish Whiskey · Comté de Cork</p>
+    <h1 class="reveal d1">Blackwater<br><span class="amp">&amp;</span> Co.</h1>
+    <p class="sub reveal d2">Distillé sur les rives de la Blackwater</p>
+    <span class="gaelic reveal d3">Uisce Beatha — l'eau de vie</span>
+    <div class="cta reveal d4">
+      <a href="#collection" class="btn solid">Découvrir la collection</a>
+      <a href="#maison" class="btn">Notre histoire</a>
+    </div>
+  </div>
+  <div class="scroll-hint"></div>
+</section>
+
+<!-- ========== LA MAISON ========== -->
+<section class="maison" id="maison">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow reveal">La Maison</p>
+      <h2 class="reveal d1">Une distillerie <em>ressuscitée</em><br>au bord de l'eau noire</h2>
+      <p class="lead reveal d2">Sur les rives de la Blackwater, une petite distillerie du XIX<sup>e</sup> siècle s'éteignait lentement, oubliée des géants industriels.</p>
+      <p class="reveal d3" style="margin-top:1.4rem">En 2018, Caoimhe Fitzgerald, enfant de Cork, en reprend les clés. Elle restaure les alambics de cuivre, rouvre les chais de pierre et impose une exigence sans compromis : un whiskey irlandais single pot still, distillé trois fois, vieilli lentement dans l'humidité de la vallée. Une maison indépendante, qui ne doit rien à personne.</p>
+      <p class="reveal d3" style="margin-top:1rem">Aujourd'hui, Blackwater &amp; Co. se sert dans les clubs les plus fermés de Mayfair et de Soho. Mais chaque goutte reste distillée là où tout a commencé&nbsp;: en Irlande.</p>
+      <div class="numbers reveal d4">
+        <div><strong>1887</strong><small>Premiers alambics</small></div>
+        <div><strong>×3</strong><small>Distillations</small></div>
+        <div><strong>100%</strong><small>Irlandais</small></div>
+      </div>
+    </div>
+    <div class="frame reveal d2">
+      <div class="frame-inner">
+        <!-- paysage stylisé : collines, rivière, distillerie -->
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2b3d34"/><stop offset="1" stop-color="#4a5f52"/>
+            </linearGradient>
+            <linearGradient id="river" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c8954a" stop-opacity=".5"/><stop offset="1" stop-color="#0d1311"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="500" fill="url(#sky)"/>
+          <circle cx="290" cy="120" r="34" fill="#e0b878" opacity=".25"/>
+          <path d="M0 230 Q80 170 160 210 T320 190 T400 200 V500 H0Z" fill="#26392f"/>
+          <path d="M0 270 Q100 220 200 255 T400 240 V500 H0Z" fill="#1c2b24"/>
+          <!-- distillerie -->
+          <g fill="#0f1714">
+            <rect x="96" y="214" width="70" height="44"/>
+            <path d="M92 216 L131 192 L170 216Z"/>
+            <rect x="150" y="170" width="10" height="34"/>
+            <path d="M176 230 l14 -18 l14 18 v28 h-28z"/>
+            <path d="M183 212 l7 -14 l7 14z"/>
+          </g>
+          <g fill="#e0b878" opacity=".7">
+            <rect x="106" y="226" width="6" height="9"/><rect x="122" y="226" width="6" height="9"/><rect x="138" y="226" width="6" height="9"/>
+          </g>
+          <path d="M150 168 q-6 -14 4 -24 q8 -10 0 -22" stroke="#efe7d8" stroke-width="2" fill="none" opacity=".18"/>
+          <!-- rivière -->
+          <path d="M0 330 Q120 300 200 320 T400 300 V500 H0Z" fill="#0d1311"/>
+          <path d="M0 330 Q120 300 200 320 T400 300" stroke="#c8954a" stroke-opacity=".5" fill="none"/>
+          <path d="M40 370 h70 M180 360 h50 M270 390 h80 M90 420 h60" stroke="#c8954a" stroke-opacity=".25"/>
+        </svg>
+      </div>
+      <div class="caption">
+        <span class="eyebrow">Vallée de la Blackwater</span>
+        <span>Comté de Cork, Irlande</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SAVOIR-FAIRE ========== -->
+<section class="craft" id="savoir-faire">
+  <div class="wrap">
+    <div class="intro">
+      <p class="eyebrow reveal">Savoir-faire</p>
+      <h2 class="reveal d1">Cinq éléments, <em>aucun raccourci</em></h2>
+      <p class="reveal d2">Le single pot still est la signature historique du whiskey irlandais&nbsp;: un mélange d'orge maltée et non maltée, distillé dans des alambics de cuivre. Nous n'avons rien inventé. Nous avons simplement refusé de simplifier.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="ogham">᚛ᚑᚏ᚜</span>
+        <h4>L'orge</h4>
+        <span class="gaelic">Eorna</span>
+        <p>Cultivée dans les comtés de Cork et de Waterford, maltée et non maltée, selon la tradition du pot still.</p>
+      </div>
+      <div class="step reveal d1">
+        <span class="ogham">᚛ᚒᚔᚄᚉᚓ᚜</span>
+        <h4>L'eau</h4>
+        <span class="gaelic">Uisce</span>
+        <p>Une eau douce et tourbée, puisée dans la vallée qui donne son nom et sa couleur à la maison.</p>
+      </div>
+      <div class="step reveal d2">
+        <span class="ogham">᚛ᚉᚑᚔᚏ᚜</span>
+        <h4>Le cuivre</h4>
+        <span class="gaelic">Copar</span>
+        <p>Trois distillations successives dans nos alambics restaurés, pour un distillat d'une rondeur soyeuse.</p>
+      </div>
+      <div class="step reveal d3">
+        <span class="ogham">᚛ᚁᚐᚏᚐᚔᚂᚂᚔ᚜</span>
+        <h4>Le fût</h4>
+        <span class="gaelic">Bairille</span>
+        <p>Ex-bourbon, oloroso, porto&nbsp;: chaque fût est choisi à la main et suivi jusqu'à sa dernière goutte.</p>
+      </div>
+      <div class="step reveal d4">
+        <span class="ogham">᚛ᚐᚌ᚜</span>
+        <h4>Le temps</h4>
+        <span class="gaelic">Am</span>
+        <p>Dans nos chais de pierre, l'humidité de la vallée fait son œuvre. Nous ne pressons jamais un whiskey.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== COLLECTION ========== -->
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow reveal">La Collection</p>
+      <h2 class="reveal d1">Quatre expressions <em>de la vallée</em></h2>
+      <div class="divider reveal d2"><svg><use href="#triquetra"/></svg></div>
+    </div>
+    <div class="bottles">
+      <article class="bottle reveal">
+        <svg style="--liquid:#b97a35"><use href="#bottle"/></svg>
+        <span class="gaelic">Abhainn Dubh</span>
+        <h3>The Original</h3>
+        <span class="type">Single Pot Still</span>
+        <p class="notes">Miel de bruyère, poire mûre, une pointe de poivre blanc.</p>
+        <div class="meta"><span><b>43%</b> vol.</span><span><b>£58</b></span></div>
+      </article>
+      <article class="bottle reveal d1">
+        <svg style="--liquid:#9c5a22"><use href="#bottle"/></svg>
+        <span class="gaelic">Ard Mór</span>
+        <h3>12 Ans</h3>
+        <span class="type">Fûts de Xérès Oloroso</span>
+        <p class="notes">Fruits secs, écorce d'orange confite, cuir et chocolat noir.</p>
+        <div class="meta"><span><b>46%</b> vol.</span><span><b>£95</b></span></div>
+      </article>
+      <article class="bottle reveal d2">
+        <span class="tag">Édition limitée</span>
+        <svg style="--liquid:#7a3a17"><use href="#bottle"/></svg>
+        <span class="gaelic">Saoirse</span>
+        <h3>18 Ans</h3>
+        <span class="type">Finition Porto Tawny</span>
+        <p class="notes">Cerise noire, clou de girofle, une finale longue et sans concession.</p>
+        <div class="meta"><span><b>48%</b> vol.</span><span><b>£240</b></span></div>
+      </article>
+      <article class="bottle reveal d3">
+        <span class="tag">Réserve</span>
+        <svg style="--liquid:#5a2a10"><use href="#bottle"/></svg>
+        <span class="gaelic">Cuan</span>
+        <h3>25 Ans</h3>
+        <span class="type">Cask Strength · Fût unique</span>
+        <p class="notes">Tabac blond, figue, embruns du port de Cork. 312 bouteilles.</p>
+        <div class="meta"><span><b>52,4%</b> vol.</span><span><b>Sur demande</b></span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========== QUIZ ========== -->
+<section class="quiz" id="quiz">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow reveal">Le Quiz</p>
+      <h2 class="reveal d1">Quel whiskey <em>vous ressemble&nbsp;?</em></h2>
+      <p class="reveal d2">Cinq questions, aucune bonne réponse. Seulement la vôtre.</p>
+    </div>
+    <div class="quiz-box reveal" id="quiz-box" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ========== FONDATRICE ========== -->
+<section class="founder" id="fondatrice">
+  <div class="wrap split">
+    <div class="founder-head-mobile">
+      <p class="eyebrow">La Fondatrice</p>
+      <h2>Caoimhe <em>Fitzgerald</em></h2>
+    </div>
+    <div class="portrait reveal">
+      <img src="img/caoimhe.jpg" alt="Caoimhe Fitzgerald, fondatrice de Blackwater &amp; Co." loading="lazy">
+      <span class="portrait-tag">Caoimhe Fitzgerald · Cork</span>
+    </div>
+    <div>
+      <div class="founder-head-desktop">
+        <p class="eyebrow reveal">La Fondatrice</p>
+        <h2 class="reveal d1">Caoimhe <em>Fitzgerald</em></h2>
+      </div>
+      <p class="reveal d2">Née dans les faubourgs ouvriers de Cork, Caoimhe n'a hérité ni d'un titre, ni d'une fortune. Elle a bâti Blackwater &amp; Co. à la force du poignet, en apprenant les chiffres, les marchés et les codes d'un monde qui ne l'attendait pas.</p>
+      <blockquote class="reveal d3">« On m'a conseillé de rendre le whiskey irlandais discret, pour plaire à Londres. J'ai préféré le rendre inoubliable. »</blockquote>
+      <p class="reveal d3">Mécène engagée, elle consacre une part des bénéfices de la maison à la culture et à la mémoire irlandaises.</p>
+      <div class="signature reveal d4">Caoimhe Fitzgerald<small>Fondatrice &amp; Directrice</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRESSE ========== -->
+<section class="press">
+  <div class="wrap">
+    <div class="divider"><svg><use href="#triquetra"/></svg></div>
+    <div class="quotes" id="quotes">
+      <div class="quote active">
+        <p>« Le seul whiskey de Mayfair qui se boit plus lentement que les secrets ne circulent. »</p>
+        <cite>— The Belgravia Chronicle</cite>
+      </div>
+      <div class="quote">
+        <p>« Une renaissance spectaculaire. Le 18 ans Saoirse est une leçon de patience et d'audace. »</p>
+        <cite>— The Mayfair Ledger</cite>
+      </div>
+      <div class="quote">
+        <p>« Caoimhe Fitzgerald a fait d'une distillerie mourante la marque la plus convoitée des clubs londoniens. »</p>
+        <cite>— Spirits &amp; Society</cite>
+      </div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- ========== VISITES ========== -->
+<section class="visit" id="visites">
+  <div class="wrap">
+    <div style="text-align:center">
+      <p class="eyebrow reveal">Visites &amp; Dégustations</p>
+      <h2 class="reveal d1">Deux adresses, <em>une seule âme</em></h2>
+    </div>
+    <div class="places">
+      <div class="place reveal">
+        <span class="ogham">᚛ᚐᚁᚆᚐᚔᚅᚅ ᚇᚒᚁᚆ᚜</span>
+        <p class="eyebrow">Irlande</p>
+        <h3>La Distillerie</h3>
+        <address>Vallée de la Blackwater<br>Comté de Cork, Irlande</address>
+        <ul>
+          <li><span>Visite des chais</span><b>Mer. – Dim.</b></li>
+          <li><span>Dégustation commentée</span><b>Sur réservation</b></li>
+          <li><span>Sélection de fût privé</span><b>Sur invitation</b></li>
+        </ul>
+        <a href="#newsletter" class="btn">Réserver une visite</a>
+      </div>
+      <div class="place reveal d1">
+        <span class="ogham">᚛ᚂᚑᚅᚇᚐᚔᚅ᚜</span>
+        <p class="eyebrow">Londres</p>
+        <h3>The Tasting Room</h3>
+        <address>Mayfair<br>Londres W1</address>
+        <ul>
+          <li><span>Salon de dégustation</span><b>Jeu. – Sam.</b></li>
+          <li><span>Soirées privées</span><b>Sur invitation</b></li>
+          <li><span>Membres</span><b>Liste d'attente</b></li>
+        </ul>
+        <a href="#newsletter" class="btn">Demander une invitation</a>
+      </div>
+    </div>
+
+    <div class="newsletter reveal" id="newsletter">
+      <div class="divider"><svg><use href="#triquetra"/></svg></div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);margin-top:1.6rem">Le Cercle <em>Blackwater</em></h2>
+      <p>Avant-premières, éditions limitées et invitations privées. Rien de plus.</p>
+      <form id="nl-form" novalidate>
+        <input type="email" id="nl-email" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail" required>
+        <button type="submit">Rejoindre</button>
+      </form>
+      <div class="msg" id="nl-msg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo"><svg><use href="#triquetra"/></svg>Blackwater <span>&amp;</span> Co.</a>
+        <p>Irish whiskey single pot still, distillé et vieilli dans la vallée de la Blackwater, Comté de Cork.</p>
+      </div>
+      <div>
+        <h5>Maison</h5>
+        <ul>
+          <li><a href="#maison">Histoire</a></li>
+          <li><a href="#savoir-faire">Savoir-faire</a></li>
+          <li><a href="#fondatrice">Fondatrice</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Whiskeys</h5>
+        <ul>
+          <li><a href="#collection">The Original</a></li>
+          <li><a href="#collection">Ard Mór 12 ans</a></li>
+          <li><a href="#collection">Saoirse 18 ans</a></li>
+          <li><a href="#collection">Cuan 25 ans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>presse@blackwater-co.ie</li>
+          <li>Cork · Londres</li>
+          <li><a href="#visites">Visites</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Blackwater &amp; Co. — <span class="gaelic">Ól go ciallmhar</span> · À consommer avec modération.</span>
+      <span>Marque et site fictifs — univers RP <em>Lords, Likes &amp; Letters</em>.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>
