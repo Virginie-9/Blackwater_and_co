@@ -1,30 +1,41 @@
-# Blackwater & Co.
+# Blackwater & Co. — site fictif
 
-Site vitrine fictif de Blackwater & Co., maison de whiskey irlandais de Caoimhe Fitzgerald (univers RP *Lords, Likes & Letters*).
+> **Ceci n'est pas une vraie marque.** Blackwater & Co. est une maison de whiskey **imaginaire**, créée pour un jeu de rôle d'écriture (RP) sur Discord.
 
-## Structure
+## Pourquoi ce dépôt ?
+
+Ce dépôt héberge le site vitrine d'une entreprise fictive d'un univers RP. Ce RP se déroule dans un 2026 alternatif où les vieilles familles aristocratiques de Londres et de Paris s'affrontent à coups de galas, de rumeurs et de réseaux sociaux.
+
+Blackwater & Co. appartient à **Caoimhe Fitzgerald**, un personnage du RP : une femme d'affaires originaire de Cork qui a fait fortune dans le whiskey. Le site sert de support d'immersion aux joueurs, qui peuvent le consulter et y faire référence pendant leurs scènes.
+
+Il est publié avec GitHub Pages, ce qui impose un dépôt public.
+
+## À savoir
+
+- **Aucun produit n'est vendu** et le site ne collecte aucune donnée. Le formulaire d'inscription n'envoie rien.
+- Les personnages, les whiskeys, les prix, les adresses et les citations de presse sont **inventés**.
+- Ce projet n'a **aucun lien** avec une distillerie, une marque ou une entreprise réelle portant un nom similaire.
+- La photo utilisée pour illustrer le personnage sert uniquement de *face claim*, dans un cadre non commercial. La personne photographiée n'est en aucun cas associée à ce projet.
+- À consommer avec modération, même dans la fiction. 🥃
+
+---
+
+<details>
+<summary><b>English summary</b></summary>
+
+This is the website of **Blackwater & Co.**, a **fictional** Irish whiskey brand created for a Discord roleplay called *Lords, Likes & Letters*. It is not a real company, it sells nothing, and it is not affiliated with any real distillery or brand. The portrait is used only as a character face claim, in a non-commercial context. The repository is public only because GitHub Pages requires it.
+</details>
+
+---
+
+## Structure technique
 
 ```
-.
-├── index.html        Contenu de la page et symboles SVG (triquetra, bouteille)
-├── css/
-│   └── style.css     Toute la mise en forme (couleurs dans :root, en haut)
-├── js/
-│   ├── main.js       Vérification d'âge, menu, animations, citations, newsletter
-│   └── quiz.js       Quiz « Quel whiskey vous ressemble ? »
-└── img/
-    ├── caoimhe.jpg   Photo de la fondatrice
-    └── favicon.svg   Icône d'onglet
+index.html        Page et symboles SVG
+css/style.css     Mise en forme
+js/main.js        Vérification d'âge, menu, animations, newsletter
+js/quiz.js        Quiz « Quel whiskey vous ressemble ? »
+img/              Photo et favicon
 ```
 
-## Déploiement (GitHub Pages)
-
-1. Pousser tous les fichiers à la racine du dépôt (en gardant les dossiers).
-2. Settings → Pages → Source : *Deploy from a branch*, branche `main`, dossier `/ (root)`.
-
-## Modifier
-
-- **Couleurs** : variables `--ink`, `--amber`, `--moss`… en haut de `css/style.css`.
-- **Whiskeys de la collection** : section `#collection` dans `index.html`.
-- **Questions et résultats du quiz** : tableaux `QUESTIONS` et `WHISKEYS` dans `js/quiz.js`.
-- **Photo** : remplacer `img/caoimhe.jpg` (format portrait 3:4 de préférence).
+Le site est entièrement statique (HTML, CSS, JavaScript) et n'utilise ni framework ni étape de build.
